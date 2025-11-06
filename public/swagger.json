@@ -1,0 +1,57 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Minimo1-DSA API", "version": "1.0.0" },
+  "servers": [{ "url": "http://localhost:8080" }],
+  "paths": {
+    "/drones": {
+      "get": { "summary": "Lista de drones", "responses": { "200": { "description": "OK" } } },
+      "post": {
+        "summary": "Añadir dron",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id":{"type":"string"}, "nombre":{"type":"string"},
+                "fabricante":{"type":"string"}, "modelo":{"type":"string"}
+              },
+              "required": ["id","nombre","fabricante","modelo"]
+            }
+          } } },
+        "responses": { "201": { "description": "Creado" }, "400": { "description": "Bad Request" } }
+      }
+    },
+    "/drones/almacen/{id}": {
+      "post": {
+        "summary": "Poner dron en mantenimiento",
+        "parameters": [{ "name":"id", "in":"path", "required":true, "schema":{"type":"string"} }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "No existe" }, "409": { "description": "Ya estaba en mantenimiento" } }
+      }
+    },
+    "/drones/reparar": {
+      "post": {
+        "summary": "Reparar el primer dron en cola",
+        "responses": { "200": { "description": "OK" }, "204": { "description": "Cola vacía" } }
+      }
+    },
+    "/pilotos": {
+      "get": { "summary": "Lista de pilotos", "responses": { "200": { "description": "OK" } } },
+      "post": {
+        "summary": "Añadir piloto",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id":{"type":"string"}, "nombre":{"type":"string"}, "apellidos":{"type":"string"}
+              },
+              "required": ["id","nombre","apellidos"]
+            }
+          } } },
+        "responses": { "201": { "description": "Creado" }, "400": { "description": "Bad Request" } }
+      }
+    }
+  }
+}
